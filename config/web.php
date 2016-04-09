@@ -6,6 +6,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'es',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -37,32 +38,18 @@ $config = [
                 ],
             ],
         ],
-        /*'urlManager' => [
-            'class' => 'yii\web\UrlManager',
-            // Disable index.php
-            'showScriptName' => false,
-            // Disable r= routes
-            'enablePrettyUrl' => true,
-            'rules' => [
-                    '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                    '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                    '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            ],
-        ],*/
         'authManager' =>  [
                 'class' => 'yii\rbac\DbManager',
                 'defaultRoles' => ['guest'],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+              'class' => 'yii\web\UrlManager',
+              'enablePrettyUrl' => true,
+              'showScriptName' => false,
+          ],
         ],
-        */
-    ],
     'params' => $params,
 ];
 

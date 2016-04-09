@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\MidUsuarios;
 
 class SiteController extends Controller
 {
@@ -70,13 +71,35 @@ class SiteController extends Controller
                 /*if(ApsUsuarios::findOne(\Yii::$app->user->getId())->usuaesta == 1){
                     return Yii::$app->getResponse()->redirect(array('/aps-usuarios/registrar'));
                 }*/
-                return Yii::$app->getResponse()->redirect(array('/usuarios/index'));
+                return Yii::$app->getResponse()->redirect(array('/usuario/index'));
             }
             return $this->goBack();
         }
         return $this->render('login', [
             'model' => $model,
         ]);
+    }
+
+    public function actionRegistrar()
+    {
+      $model = new MidUsuarios();
+
+      if ($model->load(Yii::$app->request->post())) {
+          $model->mid_tiposUsuarios_tiusiden = 2;
+          $model->setPassword($model->usuapass);
+          if ($user = $model->save()) {
+              $auth = \Yii::$app->authManager;
+              $role = $auth->getRole('usuario');
+              $auth->assign($role, $model->getId());
+              if (Yii::$app->getUser()->login($model)) {
+                  return Yii::$app->getResponse()->redirect(array('/usuario/index'));
+              }
+          }
+      } else {
+          return $this->render('registrar', [
+              'model' => $model,
+          ]);
+      }
     }
 
     public function actionLogout()

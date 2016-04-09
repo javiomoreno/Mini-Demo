@@ -27,32 +27,33 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => 'Mini-Demo',
+        'brandUrl' => ['/usuario/index'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $menuItems = [
+        ['label' => 'Inicio', 'url' => ['/usuario/index']],
+        array('label'=>'Categorias', 'url'=>array('#'),
+                            'items' => array(
+                            array('label' => 'Crear Categoria', 'url' => array('/mid-categorias/create')),
+                            array('label' => 'Ver Categorias', 'url' => array('/mid-categorias/index')))),
+        array('label'=>'Sub Categorias', 'url'=>array('#'),
+                            'items' => array(
+                            array('label' => 'Crear Sub Categoria', 'url' => array('/mid-sub-categorias/create')),
+                            array('label' => 'Ver Sub Categorias', 'url' => array('/mid-sub-categorias/index')))),
+    ];
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = [
+            'label' => 'Salir (' . Yii::$app->user->identity->usuauser . ')',
+            'url' => ['/site/logout'],
+            'linkOptions' => ['data-method' => 'post']
+        ];
+    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Registrar', 'url' => ['/site/registrar']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->usuauser . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
@@ -67,7 +68,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Aplicación Yoimar <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

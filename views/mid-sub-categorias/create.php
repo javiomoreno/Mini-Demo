@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MidUsuarios */
+/* @var $model app\models\MidSubCategorias */
 
-$this->title = 'Nuevo Usuario';
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
+$this->title = 'Create Mid Sub Categorias';
+$this->params['breadcrumbs'][] = ['label' => 'Mid Sub Categorias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="mid-usuarios-create">
+<div class="mid-sub-categorias-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

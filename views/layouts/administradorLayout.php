@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Aplicacion Yoimar',
+        'brandLabel' => 'Mini-Demo',
         'brandUrl' => ['/administrador/index'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,8 +37,16 @@ AppAsset::register($this);
         ['label' => 'Inicio', 'url' => ['/administrador/index']],
         array('label'=>'Usuarios', 'url'=>array('#'),
                             'items' => array(
-                            array('label' => 'Crear Usuarios', 'url' => array('/mid-usuarios/create')),
+                            array('label' => 'Crear Usuario', 'url' => array('/mid-usuarios/create')),
                             array('label' => 'Ver Usuarios', 'url' => array('/mid-usuarios/index')))),
+        array('label'=>'Categorias', 'url'=>array('#'),
+                            'items' => array(
+                            array('label' => 'Crear Categoria', 'url' => array('/mid-categorias/create')),
+                            array('label' => 'Ver Categorias', 'url' => array('/mid-categorias/index')))),
+        array('label'=>'Sub Categorias', 'url'=>array('#'),
+                            'items' => array(
+                            array('label' => 'Crear Sub Categoria', 'url' => array('/mid-sub-categorias/create')),
+                            array('label' => 'Ver Sub Categorias', 'url' => array('/mid-sub-categorias/index')))),
     ];
     if (!Yii::$app->user->isGuest) {
         $menuItems[] = [
@@ -64,7 +72,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Aplicación Yoimar <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Mini-Demo <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

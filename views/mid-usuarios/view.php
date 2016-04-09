@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\MidUsuarios */
 
-$this->title = $model->usuaiden;
-$this->params['breadcrumbs'][] = ['label' => 'Mid Usuarios', 'url' => ['index']];
+$this->title = $model->usuanomb;
+$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mid-usuarios-view">
@@ -29,15 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'usuaiden',
-            'mid_sexos_sexoiden',
-            'mid_tiposUsuarios_tiusiden',
             'usuanomb',
             'usuaapel',
             'usuacedu',
             'usuatele',
             'usuadire',
             'usuauser',
-            'useapass',
+            'midSexosSexoiden.sexonomb',
+            'midTiposUsuariosTiusiden.tiusnomb',
         ],
     ]) ?>
 

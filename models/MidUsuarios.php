@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use app\models\MidSexos;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "mid_usuarios".
@@ -44,7 +46,7 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
             [['mid_sexos_sexoiden', 'mid_tiposUsuarios_tiusiden'], 'integer'],
             [['usuanomb', 'usuaapel', 'usuacedu', 'usuatele', 'usuauser'], 'string', 'max' => 50],
             [['usuadire'], 'string', 'max' => 200],
-            [['useapass'], 'string', 'max' => 250],
+            [['usuapass'], 'string', 'max' => 250],
             [['mid_tiposUsuarios_tiusiden'], 'exist', 'skipOnError' => true, 'targetClass' => MidTiposUsuarios::className(), 'targetAttribute' => ['mid_tiposUsuarios_tiusiden' => 'tiusiden']],
             [['mid_sexos_sexoiden'], 'exist', 'skipOnError' => true, 'targetClass' => MidSexos::className(), 'targetAttribute' => ['mid_sexos_sexoiden' => 'sexoiden']],
         ];
@@ -56,16 +58,18 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'usuaiden' => 'Usuaiden',
-            'mid_sexos_sexoiden' => 'Mid Sexos Sexoiden',
-            'mid_tiposUsuarios_tiusiden' => 'Mid Tipos Usuarios Tiusiden',
-            'usuanomb' => 'Usuanomb',
-            'usuaapel' => 'Usuaapel',
-            'usuacedu' => 'Usuacedu',
-            'usuatele' => 'Usuatele',
-            'usuadire' => 'Usuadire',
-            'usuauser' => 'Usuauser',
-            'usuapass' => 'Usuapass',
+            'usuaiden' => 'Identificador',
+            'mid_sexos_sexoiden' => 'Sexo',
+            'midSexosSexoiden.sexonomb' => 'Sexo',
+            'mid_tiposUsuarios_tiusiden' => 'Tipo de Usuario',
+            'midTiposUsuariosTiusiden.tiusnomb' => 'Tipo de Usuario',
+            'usuanomb' => 'Nombre de Usuario',
+            'usuaapel' => 'Apellido de Usuario',
+            'usuacedu' => 'Cédula de Usuario',
+            'usuatele' => 'Teléfono de Usuario',
+            'usuadire' => 'Dirección de Usuario',
+            'usuauser' => 'Usuario de Acceso',
+            'usuapass' => 'Password',
         ];
     }
 
@@ -91,6 +95,18 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
     public function getMidSexosSexoiden()
     {
         return $this->hasOne(MidSexos::className(), ['sexoiden' => 'mid_sexos_sexoiden']);
+    }
+
+    public static function getListaTipoUsuarios()
+    {
+        $opciones = MidTiposUsuarios::find()->asArray()->all();
+        return ArrayHelper::map($opciones, 'tiusiden', 'tiusnomb');
+    }
+
+    public static function getListaSexos()
+    {
+        $opciones = MidSexos::find()->asArray()->all();
+        return ArrayHelper::map($opciones, 'sexoiden', 'sexonomb');
     }
 
     public static function findIdentity($id)

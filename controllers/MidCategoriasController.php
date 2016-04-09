@@ -3,17 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\MidUsuarios;
-use app\models\search\MidUsuariosSearch;
+use app\models\MidCategorias;
+use app\models\search\MidCategoriasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * MidUsuariosController implements the CRUD actions for MidUsuarios model.
+ * MidCategoriasController implements the CRUD actions for MidCategorias model.
  */
-class MidUsuariosController extends Controller
+class MidCategoriasController extends Controller
 {
     /**
      * @inheritdoc
@@ -23,12 +23,17 @@ class MidUsuariosController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'create'],
+                'only' => ['index', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'create'],
+                        'actions' => ['index', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['administrador'],
+                    ],
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['usuario'],
                     ],
                 ],
             ],
@@ -42,13 +47,19 @@ class MidUsuariosController extends Controller
     }
 
     /**
-     * Lists all MidUsuarios models.
+     * Lists all MidCategorias models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $this->layout ="administradorLayout";
-        $searchModel = new MidUsuariosSearch();
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
+
+        $searchModel = new MidCategoriasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,42 +69,41 @@ class MidUsuariosController extends Controller
     }
 
     /**
-     * Displays a single MidUsuarios model.
+     * Displays a single MidCategorias model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $this->layout ="administradorLayout";
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new MidUsuarios model.
+     * Creates a new MidCategorias model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $this->layout ="administradorLayout";
-        $model = new MidUsuarios();
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->usuapass);
-            if ($user = $model->save()) {
-                $auth = \Yii::$app->authManager;
-                if ($model->mid_tiposUsuarios_tiusiden == 1) {
-                    $role = $auth->getRole('administrador');
-                    $auth->assign($role, $model->getId());
-                }
-                else if ($model->mid_tiposUsuarios_tiusiden == 2) {
-                    $role = $auth->getRole('usuario');
-                    $auth->assign($role, $model->getId());
-                }
-            }
-            return $this->redirect(['view', 'id' => $model->usuaiden]);
+        $model = new MidCategorias();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->cateiden]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -102,18 +112,23 @@ class MidUsuariosController extends Controller
     }
 
     /**
-     * Updates an existing MidUsuarios model.
+     * Updates an existing MidCategorias model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $this->layout ="administradorLayout";
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->usuaiden]);
+            return $this->redirect(['view', 'id' => $model->cateiden]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -122,7 +137,7 @@ class MidUsuariosController extends Controller
     }
 
     /**
-     * Deletes an existing MidUsuarios model.
+     * Deletes an existing MidCategorias model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -135,15 +150,15 @@ class MidUsuariosController extends Controller
     }
 
     /**
-     * Finds the MidUsuarios model based on its primary key value.
+     * Finds the MidCategorias model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return MidUsuarios the loaded model
+     * @return MidCategorias the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MidUsuarios::findOne($id)) !== null) {
+        if (($model = MidCategorias::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
