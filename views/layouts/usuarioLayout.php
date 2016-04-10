@@ -43,14 +43,11 @@ AppAsset::register($this);
                             'items' => array(
                             array('label' => 'Crear Sub Categoria', 'url' => array('/mid-sub-categorias/create')),
                             array('label' => 'Ver Sub Categorias', 'url' => array('/mid-sub-categorias/index')))),
-    ];
-    if (!Yii::$app->user->isGuest) {
-        $menuItems[] = [
-            'label' => 'Salir (' . Yii::$app->user->identity->usuauser . ')',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
+        array('label'=> Yii::$app->user->identity->usuauser, 'url'=>array('#'),
+                          'items' => array(
+                          array('label' => 'Perfil', 'url' => array('/usuario/perfil')),
+                          array('label' => 'Salir', 'url' => array('/site/logout'), 'linkOptions' => array('data-method' => 'post')))),
         ];
-    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
