@@ -47,6 +47,9 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
             [['usuanomb', 'usuaapel', 'usuacedu', 'usuatele', 'usuauser'], 'string', 'max' => 50],
             [['usuadire'], 'string', 'max' => 200],
             [['usuapass'], 'string', 'max' => 250],
+            [['usuaemai'], 'string', 'max' => 100],
+            [['usuaemai'], 'unique'],
+            [['usuaemai'], 'email'],
             [['mid_tiposUsuarios_tiusiden'], 'exist', 'skipOnError' => true, 'targetClass' => MidTiposUsuarios::className(), 'targetAttribute' => ['mid_tiposUsuarios_tiusiden' => 'tiusiden']],
             [['mid_sexos_sexoiden'], 'exist', 'skipOnError' => true, 'targetClass' => MidSexos::className(), 'targetAttribute' => ['mid_sexos_sexoiden' => 'sexoiden']],
         ];
@@ -68,6 +71,7 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
             'usuacedu' => 'Cédula de Usuario',
             'usuatele' => 'Teléfono de Usuario',
             'usuadire' => 'Dirección de Usuario',
+            'usuaemai' => 'Email de Usuario',
             'usuauser' => 'Usuario de Acceso',
             'usuapass' => 'Password',
         ];
@@ -126,6 +130,18 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByEmail($usuaemai)
+    {
+        return static::findOne(['usuaemai' => $usuaemai]);
+    }
+
+
+    /**
      * @inheritdoc
      */
     public function getId()
@@ -141,11 +157,10 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->usuapass);
-    }
-
-    public function verificarPassword(){
-        return $this->usuapass;
+      if (base64_decode($this->usuapass) == $password) {
+        return true;
+      }
+      return false;
     }
 
     /**
@@ -155,8 +170,19 @@ class MidUsuarios extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->usuapass = Yii::$app->security->generatePasswordHash($password);
+        $this->usuapass = base64_encode($password);
     }
+
+    /**
+     * Generates password hash from password and sets it to the model
+     *
+     * @return password Decodificado
+     */
+    public function getPassword()
+    {
+        return base64_decode($this->usuapass);
+    }
+
 
         /**
      * @inheritdoc

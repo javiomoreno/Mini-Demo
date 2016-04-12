@@ -40,10 +40,13 @@ $this->title = 'Registrar';
       </div>
 
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
+          <?= $form->field($model, 'usuaemai')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-4">
           <?= $form->field($model, 'usuauser')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <?= $form->field($model, 'usuapass')->passwordInput(['maxlength' => true]) ?>
         </div>
       </div>

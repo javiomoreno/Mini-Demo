@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\MidUsuarios;
+use app\models\EmailForm;
 
 class SiteController extends Controller
 {
@@ -95,6 +96,9 @@ class SiteController extends Controller
                   return Yii::$app->getResponse()->redirect(array('/usuario/index'));
               }
           }
+          return $this->render('registrar', [
+              'model' => $model,
+          ]);
       } else {
           return $this->render('registrar', [
               'model' => $model,
@@ -109,21 +113,29 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function actionContact()
+    public function actionRecuperarDatos()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        $model = new EmailForm();
 
-            return $this->refresh();
+        if ($model->load(Yii::$app->request->post())) {
+          if($model2 = MidUsuarios::findByEmail($model->email)){
+              $emailAdmin = Yii::$app->params['adminEmail'];
+              $asunto = "Recuperar Datos";
+              $cuerpo = "Usuario: " .$model2->usuauser . " Contraseña: " . $model2->getPassword();
+              $content = "<p>Email: " . $model2->usuaemai . "</p>";
+              $content .= "<p>Usuario: " . $model2->usuauser."</p>";
+              $content .= "<p>Contraseña: " . $model2->getPassword() ."</p>";
+              Yii::$app->mailer->compose("@app/mail/layouts/html", ["content" => $content])
+                  ->setTo($model2->usuaemai)
+                  ->setFrom($emailAdmin)
+                  ->setSubject($asunto)
+                  ->setTextBody($cuerpo)
+                  ->send();
+              Yii::$app->session->setFlash('enviado');
+          }
+          Yii::$app->session->setFlash('noEnviado');
+          return $this->refresh();
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionAbout()
-    {
-        return $this->render('about');
+        return $this->render('recuperar-datos', ['model' => $model]);
     }
 }

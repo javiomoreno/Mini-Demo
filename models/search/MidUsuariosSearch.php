@@ -19,7 +19,7 @@ class MidUsuariosSearch extends MidUsuarios
     {
         return [
             [['usuaiden', 'mid_sexos_sexoiden', 'mid_tiposUsuarios_tiusiden'], 'integer'],
-            [['usuanomb', 'usuaapel', 'usuacedu', 'usuatele', 'usuadire', 'usuauser', 'usuapass'], 'safe'],
+            [['usuanomb', 'usuaapel', 'usuacedu', 'usuatele', 'usuadire', 'usuaemai', 'usuauser', 'usuapass'], 'safe'],
         ];
     }
 
@@ -70,6 +70,7 @@ class MidUsuariosSearch extends MidUsuarios
             ->andFilterWhere(['like', 'usuatele', $this->usuatele])
             ->andFilterWhere(['like', 'usuadire', $this->usuadire])
             ->andFilterWhere(['like', 'usuauser', $this->usuauser])
+            ->andFilterWhere(['like', 'usuaemai', $this->usuaemai])
             ->andFilterWhere(['like', 'usuapass', $this->usuapass]);
 
         return $dataProvider;
