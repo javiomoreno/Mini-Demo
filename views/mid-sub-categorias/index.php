@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\search\MidSubCategoriasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mid Sub Categorias';
+$this->title = 'Sub Categorias';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mid-sub-categorias-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Mid Sub Categorias', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Nueva Sub Categoria', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,10 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'sucaiden',
-            'mid_categorias_cateiden',
             'sucanomb',
             'sucadesc',
+            'midCategoriasCateiden.catenomb',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

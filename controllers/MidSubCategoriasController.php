@@ -23,12 +23,17 @@ class MidSubCategoriasController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'create'],
+                'only' => ['index', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'create'],
+                        'actions' => ['index', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['administrador'],
+                    ],
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['usuario'],
                     ],
                 ],
             ],
@@ -47,7 +52,12 @@ class MidSubCategoriasController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout ="administradorLayout";
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
         $searchModel = new MidSubCategoriasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -64,6 +74,12 @@ class MidSubCategoriasController extends Controller
      */
     public function actionView($id)
     {
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -76,7 +92,12 @@ class MidSubCategoriasController extends Controller
      */
     public function actionCreate()
     {
-        $this->layout ="administradorLayout";
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
         $model = new MidSubCategorias();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -96,6 +117,12 @@ class MidSubCategoriasController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(\Yii::$app->user->can('administrador')){
+          $this->layout ="administradorLayout";
+        }
+        else if(\Yii::$app->user->can('usuario')){
+          $this->layout ="usuarioLayout";
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

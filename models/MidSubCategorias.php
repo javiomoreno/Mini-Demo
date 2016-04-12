@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "mid_subCategorias".
@@ -44,10 +45,11 @@ class MidSubCategorias extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'sucaiden' => 'Sucaiden',
-            'mid_categorias_cateiden' => 'Mid Categorias Cateiden',
-            'sucanomb' => 'Sucanomb',
-            'sucadesc' => 'Sucadesc',
+            'sucaiden' => 'Identificador',
+            'mid_categorias_cateiden' => 'Categoría',
+            'midCategoriasCateiden.catenomb' => 'Categoría',
+            'sucanomb' => 'Nombre de Sub Categoría',
+            'sucadesc' => 'Descripción',
         ];
     }
 
@@ -57,5 +59,11 @@ class MidSubCategorias extends \yii\db\ActiveRecord
     public function getMidCategoriasCateiden()
     {
         return $this->hasOne(MidCategorias::className(), ['cateiden' => 'mid_categorias_cateiden']);
+    }
+
+    public static function getListaCategorias()
+    {
+        $opciones = MidCategorias::find()->asArray()->all();
+        return ArrayHelper::map($opciones, 'cateiden', 'catenomb');
     }
 }

@@ -102,8 +102,10 @@ class MidCategoriasController extends Controller
 
         $model = new MidCategorias();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->cateiden]);
+        if ($model->load(Yii::$app->request->post())) {
+          $model->mid_usuarios_usuaiden = \Yii::$app->user->getId();
+          $model->save();
+          return $this->redirect(['view', 'id' => $model->cateiden]);
         } else {
             return $this->render('create', [
                 'model' => $model,

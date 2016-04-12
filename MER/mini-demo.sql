@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-04-2016 a las 17:12:24
+-- Tiempo de generación: 12-04-2016 a las 19:34:37
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.6.12
 
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `mid_categorias` (
   `mid_usuarios_usuaiden` int(10) unsigned NOT NULL,
   `catenomb` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `catedesc` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `mid_subCategorias` (
   `mid_categorias_cateiden` int(10) unsigned NOT NULL,
   `sucanomb` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sucadesc` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -168,16 +168,17 @@ CREATE TABLE IF NOT EXISTS `mid_usuarios` (
   `usuacedu` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `usuatele` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `usuadire` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `usuaemai` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `usuauser` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `usuapass` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `mid_usuarios`
 --
 
-INSERT INTO `mid_usuarios` (`usuaiden`, `mid_sexos_sexoiden`, `mid_tiposUsuarios_tiusiden`, `usuanomb`, `usuaapel`, `usuacedu`, `usuatele`, `usuadire`, `usuauser`, `usuapass`) VALUES
-(1, 2, 1, 'administrador', 'administrador', NULL, NULL, NULL, 'admin', '$2y$13$QA5E.8L2Izbv5oNjQGJB.OtVTQu.OlmKifls/uaYoP/ZELMIYs5zu');
+INSERT INTO `mid_usuarios` (`usuaiden`, `mid_sexos_sexoiden`, `mid_tiposUsuarios_tiusiden`, `usuanomb`, `usuaapel`, `usuacedu`, `usuatele`, `usuadire`, `usuaemai`, `usuauser`, `usuapass`) VALUES
+(1, 2, 1, 'administrador', 'administrador', NULL, NULL, NULL, '', 'admin', 'MTIzNDU2');
 
 -- --------------------------------------------------------
 
@@ -277,7 +278,7 @@ ALTER TABLE `migration`
 -- AUTO_INCREMENT de la tabla `mid_categorias`
 --
 ALTER TABLE `mid_categorias`
-  MODIFY `cateiden` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `cateiden` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `mid_sexos`
 --
@@ -287,7 +288,7 @@ ALTER TABLE `mid_sexos`
 -- AUTO_INCREMENT de la tabla `mid_subCategorias`
 --
 ALTER TABLE `mid_subCategorias`
-  MODIFY `sucaiden` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `sucaiden` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `mid_tiposUsuarios`
 --
@@ -297,7 +298,7 @@ ALTER TABLE `mid_tiposUsuarios`
 -- AUTO_INCREMENT de la tabla `mid_usuarios`
 --
 ALTER TABLE `mid_usuarios`
-  MODIFY `usuaiden` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `usuaiden` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Restricciones para tablas volcadas
 --

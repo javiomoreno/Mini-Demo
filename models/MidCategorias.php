@@ -45,10 +45,11 @@ class MidCategorias extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'cateiden' => 'Cateiden',
-            'mid_usuarios_usuaiden' => 'Mid Usuarios Usuaiden',
-            'catenomb' => 'Catenomb',
-            'catedesc' => 'Catedesc',
+            'cateiden' => 'Identificador',
+            'mid_usuarios_usuaiden' => 'Usuario',
+            'midSubCategorias.usuanomb' => 'Usuario',
+            'catenomb' => 'Nombre de Categoría',
+            'catedesc' => 'Descipción de Categora',
         ];
     }
 

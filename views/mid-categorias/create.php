@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\MidCategorias */
 
-$this->title = 'Create Mid Categorias';
-$this->params['breadcrumbs'][] = ['label' => 'Mid Categorias', 'url' => ['index']];
+$this->title = 'Nueva Categoría';
+$this->params['breadcrumbs'][] = ['label' => 'Categorias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mid-categorias-create">
